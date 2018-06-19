@@ -18,9 +18,9 @@ namespace PriceGrabber
         public App()
         {
             InitializeComponent();
-            MainPage = new LoginPage();
+          //  MainPage = new LoginPage();
            // MainPage = new MainPage();
-            // MainPage = new LeadGeneratorPage();
+             MainPage = new AddProductPhotoPage(null, new Core.Data.PriceGrabberItem());
             //   RequestLocationPermission();
             //   Test();
             // var vw = new WebViewerView(CustomControls.BrowserType.NewLogin, new LoginPage());

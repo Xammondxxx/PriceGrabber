@@ -59,6 +59,9 @@ namespace PriceGrabber.Pages.PriceGrabber
                 stream = new MemoryStream(image);
             }
             imgProduct.Source = ImageSource.FromStream(() => new MemoryStream(stream.ToArray()));
+
+            var imageText = await GoogleVisionApi.GoogleVision.GetTextFromImage(stream.ToArray());
+            entryComment.Text = imageText?.responses?.FirstOrDefault()?.textAnnotations?.FirstOrDefault().description;
         }
 
         private void EntryPrice_TextChanged(object sender, TextChangedEventArgs e)

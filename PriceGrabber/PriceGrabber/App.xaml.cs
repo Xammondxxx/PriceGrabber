@@ -19,6 +19,7 @@ namespace PriceGrabber
         {
             InitializeComponent();
             MainPage = new LoginPage();
+           // MainPage = new MainPage();
             // MainPage = new LeadGeneratorPage();
             //   RequestLocationPermission();
             //   Test();

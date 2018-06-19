@@ -1,4 +1,5 @@
-﻿using PriceGrabber.DependencyServices;
+﻿using PriceGrabber.Core;
+using PriceGrabber.DependencyServices;
 using PriceGrabber.Helpers;
 using PriceGrabber.Pages.PriceGrabber;
 using System;
@@ -53,6 +54,11 @@ namespace PriceGrabber.Pages.LeadGenerator
             imageTapGR.Tapped += GetNewImage;
             slImage.GestureRecognizers.Add(imageTapGR);
             imgContact.GestureRecognizers.Add(imageTapGR);
+        }
+
+        protected override Module GetModule()
+        {
+            return Module.LeadGenerator;
         }
 
         private async void GetNewImage(object sender, EventArgs e)

@@ -20,7 +20,6 @@ namespace PriceGrabber.Pages
             InitializeComponent();
             Initilize();
 
-            DependencyService.Get<IAPIHelper>().RequestPermissions("Location");
         }
 
         public void Initilize()
@@ -28,7 +27,8 @@ namespace PriceGrabber.Pages
             mainGrid.WidthRequest = StaticDeviceInfo.WidthDp * 0.8;
             mainGrid.HeightRequest = mainGrid.WidthRequest;
             btnGrabber.Clicked += BtnGrabber_Clicked;
-            btnLeadGen.Clicked += BtnLeadGen_Clicked;  
+            btnLeadGen.Clicked += BtnLeadGen_Clicked;
+            btnLeadGen.FontSize = btnGrabber.FontSize = 18;
         }
 
         private void BtnLeadGen_Clicked(object sender, EventArgs e)
@@ -41,6 +41,13 @@ namespace PriceGrabber.Pages
             App.Current.MainPage = new AddressPage(null);
         }
 
-       
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            DependencyService.Get<IAPIHelper>().RequestPermissions("Location");
+        }
+
+
     }
 }

@@ -177,7 +177,6 @@ namespace PriceGrabber.Pages.PriceGrabber
 
                 StopFindLocation();
             }
-            isStoreDone = isCountryDone = false;
         }
     }
 }

@@ -153,6 +153,8 @@ namespace PriceGrabber.Pages
             while (_loginCallbackProcess)
                 await Task.Delay(200);
 
+            (App.Current.MainPage as ContainerPage)?.ShowActivityIndicator();
+
             _loginCallbackProcess = true;
             try
             {

@@ -16,7 +16,7 @@
 
             <Button x:Name="btnGrabber" Text="Price Grabber" TextColor="White" FontSize="Large" BackgroundColor="{StaticResource MainBackgroundColor}"></Button>
 
-            <Button x:Name="btnLeadGen" Grid.Column="1" Text="Lead Generator" FontSize="Large"  TextColor="White"></Button>
+            <Button x:Name="btnLeadGen" Grid.Column="1" Text="Lead Generator" FontSize="Large"  TextColor="White"  BackgroundColor="{StaticResource MainBackgroundColor}"></Button>
             <Button Grid.Row="1" Text="Empty 2" FontSize="Large" TextColor="White"></Button>
             <Button Grid.Row="1" Grid.Column="1" Text="Empty 3" FontSize="Large" TextColor="White" ></Button>
         </Grid>

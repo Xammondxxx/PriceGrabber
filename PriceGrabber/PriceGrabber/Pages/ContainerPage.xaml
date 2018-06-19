@@ -4,6 +4,13 @@
              x:Class="PriceGrabber.Pages.ContainerPage"
              BackgroundColor="Aqua">
     <ContentPage.Content>
-        <Grid x:Name="Grid" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+        <Grid x:Name="Grid" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
+            <ActivityIndicator 
+                x:Name="activityIndicator" IsVisible="False" HeightRequest="60" 
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="CenterAndExpand"
+                Scale ="2.0"
+                               />
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

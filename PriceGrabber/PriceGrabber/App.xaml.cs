@@ -18,9 +18,10 @@ namespace PriceGrabber
         public App()
         {
             InitializeComponent();
-            MainPage = new LeadGeneratorPage();
-         //   RequestLocationPermission();
-         //   Test();
+            MainPage = new LoginPage();
+            // MainPage = new LeadGeneratorPage();
+            //   RequestLocationPermission();
+            //   Test();
             // var vw = new WebViewerView(CustomControls.BrowserType.NewLogin, new LoginPage());
             //  vw.Uri = "http://youtube.com";
             // MainPage = neTestw ContainerPage(vw);
@@ -33,6 +34,7 @@ namespace PriceGrabber
             MainPage = new AddressPage(null);
         }
 
+        //TEST
         private void RequestLocationPermission()
         {
             DependencyService.Get<IAPIHelper>().RequestPermissions("Location");

@@ -1,4 +1,5 @@
-﻿using PriceGrabber.Pages.LeadGenerator;
+﻿using PriceGrabber.DependencyServices;
+using PriceGrabber.Pages.LeadGenerator;
 using PriceGrabber.Pages.PriceGrabber;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,8 @@ namespace PriceGrabber.Pages
         {
             InitializeComponent();
             Initilize();
+
+            DependencyService.Get<IAPIHelper>().RequestPermissions("Location");
         }
 
         public void Initilize()
@@ -37,5 +40,7 @@ namespace PriceGrabber.Pages
         {
             App.Current.MainPage = new AddressPage(null);
         }
+
+       
     }
 }

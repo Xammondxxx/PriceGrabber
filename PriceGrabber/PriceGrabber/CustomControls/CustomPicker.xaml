@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PriceGrabber.CustomControls.CustomPicker"
+             xmlns:CustomControls="clr-namespace:PriceGrabber.CustomControls"
+             Orientation="Horizontal"
+             x:Name="This"
+             >
+    <Grid WidthRequest="{Binding Width, Source={Reference This}}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <CustomControls:BasePicker x:Name="PickerCtrl" HorizontalOptions="StartAndExpand"
+                                   Grid.Column="0" Grid.ColumnSpan="2" WidthRequest="{Binding Width, Source={Reference This}}" />
+        <Image Grid.Column="1" x:Name="ArrowImage" Source="BlueArrowDown.png"   HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+
+    </Grid>
+</StackLayout>

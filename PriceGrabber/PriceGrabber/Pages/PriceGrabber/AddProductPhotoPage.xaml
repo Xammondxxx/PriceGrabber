@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Page:CustomNavigationPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PriceGrabber.Pages.PriceGrabber.AddProductPhotoPage"
+             xmlns:CustomControls="clr-namespace:PriceGrabber.CustomControls"
+             xmlns:Page="clr-namespace:PriceGrabber.Pages.PriceGrabber"
+
+             >
+    <ContentPage.Content>
+        <Grid Margin="20,10,20,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="80" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid>
+                <Frame BorderColor="{StaticResource MainBackgroundColor}"  HasShadow="False"></Frame>
+                <Grid>
+                    <StackLayout x:Name="slImage" Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                        <Image WidthRequest="35" HeightRequest="35" Source="Image.png" />
+                        <Label Margin="10,0,0,0" Text="Add Image" FontSize="Large"/>
+                    </StackLayout>
+                    <Image x:Name="imgProduct" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="2" Aspect="AspectFill"  />
+                </Grid>
+            </Grid>
+
+            <StackLayout Grid.Row="1" Margin="0,20,0,10" Spacing="10">
+                <CustomControls:CustomPicker x:Name="pkrBrand" HeightRequest="45" />
+                <CustomControls:BaseEntry x:Name="entryProductName"  HeightRequest="45"  />
+                <CustomControls:BaseEntry x:Name="entryPrice" Keyboard="Numeric"  HeightRequest="45"  />
+            </StackLayout>
+
+            <StackLayout Grid.Row="2" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <CustomControls:BaseEditor VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Keyboard="Text"  x:Name="entryComment" Margin="0,0,0,10"   />
+            </StackLayout>
+         
+
+            <CustomControls:BaseButton Grid.Row="3" x:Name="btnDone" HeightRequest="60" HorizontalOptions="FillAndExpand" 
+                                       Margin="-3,0,-3,0" BackgroundColor="{StaticResource MainBackgroundColor}"  
+                                       FontSize="Small" TextColor="White" />
+
+
+        </Grid>
+    </ContentPage.Content>
+</Page:CustomNavigationPage>

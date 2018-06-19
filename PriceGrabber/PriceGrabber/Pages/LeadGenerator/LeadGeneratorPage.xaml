@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Page:CustomNavigationPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:CustomControls="clr-namespace:PriceGrabber.CustomControls"
+             xmlns:Page="clr-namespace:PriceGrabber.Pages.PriceGrabber"
+             x:Class="PriceGrabber.Pages.LeadGenerator.LeadGeneratorPage">
+    <ContentPage.Content>
+        <Grid Margin="0,10,0,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <ScrollView Grid.Row="0">
+
+                <Grid Margin="20,0,20,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <!--take photo?-->
+                            <RowDefinition Height="Auto"/>
+                            <!--gallery-->
+                            <RowDefinition Height="*"/>
+                            <!--note?-->
+                        </Grid.RowDefinitions>
+
+                        <StackLayout Spacing="10">
+                            <CustomControls:BaseEntry x:Name="entryFirstName"  HeightRequest="45"  />
+                            <CustomControls:BaseEntry x:Name="entryLastName"  HeightRequest="45"  />
+                            <CustomControls:BaseEntry x:Name="entryBusiness"  HeightRequest="45"  />
+                            <CustomControls:BaseEntry x:Name="entryEmail"  HeightRequest="45"  />
+                            <CustomControls:BaseEntry x:Name="entryPhone"  HeightRequest="45"  />
+                            <CustomControls:CustomPicker x:Name="pkrCountry"  HeightRequest="40"  />
+                            <Grid HeightRequest="40">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label x:Name="lbDevicesNumber" FontAttributes="Bold" FontSize="Medium" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" Margin="0,0,25,0" />
+                                <CustomControls:CustomPicker Grid.Column="1" x:Name="pkrNumberOfDevices" HorizontalOptions="FillAndExpand"/>
+                            </Grid>
+                            <Grid HeightRequest="35">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label x:Name="lbConversation" FontAttributes="Bold" FontSize="Medium" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" Margin="0,0,20,0" />
+                                <CustomControls:CheckBox x:Name="cbConverasationNo" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Grid.Column="1"/>
+                                <CustomControls:CheckBox x:Name="cbConverasationYes" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Grid.Column="2"/>
+                            </Grid>
+                        </StackLayout>
+
+
+                    <Grid Grid.Row="1" HeightRequest="200">
+                        <Frame BorderColor="{StaticResource MainBackgroundColor}"  HasShadow="False"></Frame>
+                        <Grid>
+                            <StackLayout x:Name="slImage" Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                                <Image WidthRequest="35" HeightRequest="35" Source="Image.png" />
+                                <Label Margin="10,0,0,0" Text="Add Image" FontSize="Large"/>
+                            </StackLayout>
+                            <Image x:Name="imgContact" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="2" Aspect="AspectFill"  />
+                        </Grid>
+                    </Grid>
+
+                    <StackLayout Grid.Row="2" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" HeightRequest="100">
+                        <CustomControls:BaseEditor VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Keyboard="Text"  x:Name="entryComment" Margin="0,0,0,10"   />
+                    </StackLayout>
+                </Grid>
+                
+
+               
+            </ScrollView>
+            <CustomControls:BaseButton Grid.Row="2" x:Name="btnDone" HeightRequest="60" HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand"
+                                       Margin="17,0,17,0" BackgroundColor="{StaticResource MainBackgroundColor}"  
+                                       FontSize="Small" TextColor="White" />
+        </Grid>
+    </ContentPage.Content>
+</Page:CustomNavigationPage>

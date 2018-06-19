@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PriceGrabber.Views.WebViewerView">
+  <ContentView.Content>
+        <Grid  RowSpacing="0" ColumnSpacing="0" x:Name="MainGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition x:Name="rd0" Height="*" />
+                <RowDefinition x:Name="rd1" Height="10*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Back and title-->
+            <ContentView Grid.Row="0" x:Name="lblTitleView" BackgroundColor="{StaticResource MainBackgroundColor}">
+                <Label  x:Name="lblTitle" BackgroundColor="{StaticResource MainBackgroundColor}" 
+                    FontSize="Medium" TextColor="White" 
+                    HorizontalOptions="Fill" VerticalOptions="Fill"
+                    HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                    LineBreakMode="TailTruncation"/>
+            </ContentView>
+           <!-- <ContentView x:Name="btnBackView" BackgroundColor="{StaticResource DarkBlue}" 
+                HorizontalOptions="Start" VerticalOptions="FillAndExpand">
+                <ContentView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="BackButtonClicked"/>
+                </ContentView.GestureRecognizers>
+                <Button x:Name="btnBack"  Image="back_arrow" Margin="13,5,10,5"  
+                    BackgroundColor="Transparent" Clicked="BackButtonClicked" HorizontalOptions="Center" VerticalOptions="Center"/>
+            </ContentView>-->
+
+            <StackLayout x:Name="slWebContainer" Grid.Row="1" Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            </StackLayout>
+
+        </Grid>
+
+    </ContentView.Content>
+</ContentView>

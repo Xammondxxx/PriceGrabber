@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Page:CustomNavigationPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PriceGrabber.Pages.PriceGrabber.AddressPage"
+             xmlns:CustomControls="clr-namespace:PriceGrabber.CustomControls"
+             xmlns:Page="clr-namespace:PriceGrabber.Pages.PriceGrabber"
+                      
+                      >
+    <ContentPage.Content>
+        <Grid RowSpacing="15" Margin="15,15,15,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+          
+            <StackLayout Spacing="15">
+                <CustomControls:CustomPicker x:Name="pkrCountry" HeightRequest="45" />
+                <CustomControls:BaseEntry x:Name="entryStore"  HeightRequest="45"  />
+            </StackLayout>
+
+            <Grid Grid.Row="1"  RowSpacing="15">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Label x:Name="lbLocation" FontSize="Medium" TextColor="Black" FontAttributes="Bold" />
+                <ContentView x:Name="cvMap" Grid.Row="1"  VerticalOptions="Fill" HorizontalOptions="Fill"/>
+                <Image  Grid.Row="1" x:Name="imgPin" Source="Location2x" HeightRequest="50" WidthRequest="50"  HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"  Margin="0,0,0,50"/>
+                <ActivityIndicator Grid.Row="1" x:Name="actIndicator"  VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+            </Grid>
+
+
+            <CustomControls:BaseButton Grid.Row="2" x:Name="btnNext" HeightRequest="60" HorizontalOptions="FillAndExpand" 
+                                       Margin="-3,-10,-3,0" BackgroundColor="{StaticResource MainBackgroundColor}"  FontSize="Small" TextColor="White" />
+
+        </Grid>
+    </ContentPage.Content>
+</Page:CustomNavigationPage>

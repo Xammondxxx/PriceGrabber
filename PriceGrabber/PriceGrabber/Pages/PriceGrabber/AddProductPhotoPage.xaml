@@ -27,9 +27,9 @@
             </Grid>
 
             <StackLayout Grid.Row="1" Margin="0,20,0,10" Spacing="10">
-                <CustomControls:CustomPicker x:Name="pkrBrand" HeightRequest="45" />
-                <CustomControls:BaseEntry x:Name="entryProductName"  HeightRequest="45"  />
-                <CustomControls:BaseEntry x:Name="entryPrice" Keyboard="Numeric"  HeightRequest="45"  />
+                <CustomControls:EntryPicker x:Name="pkrBrand" HeightRequest="45" />
+                <CustomControls:EntryPicker x:Name="pkrProductName" HeightRequest="45"  />
+                <CustomControls:EntryPicker x:Name="pkrPrice" HeightRequest="45"  />
             </StackLayout>
 
             <StackLayout Grid.Row="2" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">

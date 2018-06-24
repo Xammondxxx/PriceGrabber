@@ -3,22 +3,164 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PriceGrabber.Pages.MainPage">
     <ContentPage.Content>
-        <Grid x:Name="mainGrid" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" 
-              RowSpacing="20" ColumnSpacing="20">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+        <Grid>
+            <Image Source="bg.png" Aspect="Fill"></Image>
+            
+            <Grid x:Name="mainGrid" RowSpacing="5" ColumnSpacing="5" Margin="5,5,5,5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <Button x:Name="btnGrabber" Text="Price Grabber" TextColor="White" FontSize="Large" BackgroundColor="{StaticResource MainBackgroundColor}"></Button>
+                <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Padding="5,0,5,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Source="menu.png" HorizontalOptions="Start" VerticalOptions="Center" HeightRequest="20" WidthRequest="20" Aspect="AspectFit"></Image>
+                    <Image Grid.Column="1" Source="hphero.png" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="28" WidthRequest="120" Aspect="AspectFit"></Image>
+                    <Image Grid.Column="2" Source="user.png" HorizontalOptions="End" VerticalOptions="Center" HeightRequest="20" WidthRequest="20" Aspect="AspectFit"></Image>
+                </Grid>
 
-            <Button x:Name="btnLeadGen" Grid.Column="1" Text="Lead Generator" FontSize="Large"  TextColor="White"  BackgroundColor="{StaticResource MainBackgroundColor}"></Button>
-            <Button Grid.Row="1" Text="Empty 2" FontSize="Large" TextColor="White"></Button>
-            <Button Grid.Row="1" Grid.Column="1" Text="Empty 3" FontSize="Large" TextColor="White" ></Button>
+                <Frame Grid.Row="1" Grid.Column="0" BorderColor="White" CornerRadius="3" BackgroundColor="#f38237" Padding="1" Margin="1" x:Name="FrameLeadGenerator">
+                    <Grid ColumnSpacing="0" RowSpacing="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1.3*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" VerticalOptions="Center" HorizontalOptions="Center" Source="menu_ico_print.png" 
+                               HeightRequest="40" WidthRequest="40" Aspect="AspectFill"></Image>
+                        <Label Grid.Column="1" Grid.Row="0" VerticalOptions="End" TextColor="White" FontSize="Medium" Text="Lead Generator"></Label>
+                        <Label Grid.Column="1" Grid.Row="1" VerticalOptions="Start" TextColor="White" FontSize="Micro"  Text="Printer and PC sales opportunities"></Label>
+                    </Grid>
+                </Frame>
+
+                <Frame Grid.Row="1" Grid.Column="1" BorderColor="White" CornerRadius="3" BackgroundColor="#f38237" Padding="1" Margin="1" x:Name="ImageLeadGenerator">
+                    <Image Source="menu_img_1.png" Aspect="AspectFill"></Image>
+                </Frame>
+
+                <Frame Grid.Row="2" Grid.Column="0" BorderColor="White" CornerRadius="3" BackgroundColor="#1aa4d4" Padding="1" Margin="1" x:Name="FramePriceGrabber">
+                    <Grid ColumnSpacing="0" RowSpacing="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1.3*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" VerticalOptions="Center" HorizontalOptions="Center" Source="menu_ico_star.png" HeightRequest="40" WidthRequest="40" Aspect="AspectFill"></Image>
+                        <Label Grid.Column="1" Grid.Row="0" VerticalOptions="End" TextColor="White" FontSize="Medium" Text="POS/Promo"></Label>
+                        <Label Grid.Column="1" Grid.Row="1" VerticalOptions="Start" TextColor="White" FontSize="Micro"  Text="And Price grabber"></Label>
+                    </Grid>
+                </Frame>
+
+                <Frame Grid.Row="2" Grid.Column="1" BorderColor="White" CornerRadius="3" BackgroundColor="#1aa4d4" Padding="1" Margin="1" x:Name="ImagePriceGrabber">
+                    <Image Source="menu_img_2.png" Aspect="AspectFill"></Image>
+                </Frame>
+
+                <Frame Grid.Row="3" Grid.Column="0" BorderColor="White" CornerRadius="3" BackgroundColor="#0a5693" Padding="1" Margin="1">
+                    <Grid ColumnSpacing="0" RowSpacing="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1.3*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" VerticalOptions="Center" HorizontalOptions="Center" Source="menu_ico_chart.png" HeightRequest="40" WidthRequest="40" Aspect="AspectFill"></Image>
+                        <Label Grid.Column="1" Grid.Row="0" VerticalOptions="End" TextColor="White" FontSize="Medium" Text="Deal Win/Loss"></Label>
+                        <Label Grid.Column="1" Grid.Row="1" VerticalOptions="Start" TextColor="White" FontSize="Micro"  Text="Insights"></Label>
+                    </Grid>
+                </Frame>
+
+                <Frame Grid.Row="3" Grid.Column="1" BorderColor="White" CornerRadius="3" BackgroundColor="#0a5693" Padding="1" Margin="1">
+                    <Image Source="menu_img_3.png" Aspect="AspectFill"></Image>
+                </Frame>
+
+                <Frame Grid.Row="4" Grid.Column="0" BorderColor="White" CornerRadius="3" BackgroundColor="#07533d" Padding="1" Margin="1">
+                    <Grid ColumnSpacing="0" RowSpacing="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1.3*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" VerticalOptions="Center" HorizontalOptions="Center" Source="menu_ico_search.png" HeightRequest="40" WidthRequest="40" Aspect="AspectFill"></Image>
+                        <Label Grid.Column="1" Grid.Row="0" VerticalOptions="End" TextColor="White" FontSize="Medium" Text="Product Finder"></Label>
+                        <Label Grid.Column="1" Grid.Row="1" VerticalOptions="Start" TextColor="White" FontSize="Micro"  Text="And Promo Code Generator"></Label>
+                    </Grid>
+                </Frame>
+
+                <Frame Grid.Row="4" Grid.Column="1" BorderColor="White" CornerRadius="3" BackgroundColor="#07533d" Padding="1" Margin="1">
+                    <Image Source="menu_img_4.png" Aspect="AspectFill"></Image>
+                </Frame>
+
+                <Frame Grid.Row="5" Grid.Column="0" BorderColor="White" CornerRadius="3" BackgroundColor="#d71562" Padding="1" Margin="1">
+                    <Grid ColumnSpacing="0" RowSpacing="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1.3*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" VerticalOptions="Center" HorizontalOptions="Center" Source="menu_ico_case.png" HeightRequest="40" WidthRequest="40" Aspect="AspectFill"></Image>
+                        <Label Grid.Column="1" Grid.Row="0" VerticalOptions="End" TextColor="White" FontSize="Medium" Text="HP Recruting"></Label>
+                        <Label Grid.Column="1" Grid.Row="1" VerticalOptions="Start" TextColor="White" FontSize="Micro"  Text="Global Employee referral"></Label>
+                    </Grid>
+                </Frame>
+
+                <Frame Grid.Row="5" Grid.Column="1" BorderColor="White" CornerRadius="3" BackgroundColor="#d71562" Padding="1" Margin="1">
+                    <Image Source="menu_img_5.png" Aspect="AspectFill"></Image>
+                </Frame>
+
+                <Frame Grid.Row="6" Grid.Column="0" BorderColor="White" CornerRadius="3" BackgroundColor="#7fc04b" Padding="1" Margin="1">
+                    <Grid ColumnSpacing="0" RowSpacing="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1.3*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" VerticalOptions="Center" HorizontalOptions="Center" Source="menu_ico_hand.png" HeightRequest="40" WidthRequest="40" Aspect="AspectFill"></Image>
+                        <Label Grid.Column="1" Grid.Row="0" VerticalOptions="EndAndExpand" TextColor="White" FontSize="Medium" Text="WeCare@HP"></Label>
+                        <Label Grid.Column="1" Grid.Row="1" VerticalOptions="Start" TextColor="White" FontSize="Micro"  Text="Customer Advocate"></Label>
+                    </Grid>
+                </Frame>
+
+                <Frame Grid.Row="6" Grid.Column="1" BorderColor="White" CornerRadius="3" BackgroundColor="#7fc04b" Padding="1" Margin="1">
+                    <Image Source="menu_img_6.png" Aspect="AspectFill"></Image>
+                </Frame>
+
+                <!--
+                <Button x:Name="btnGrabber" Text="Price Grabber" TextColor="White" FontSize="Large" BackgroundColor="{StaticResource MainBackgroundColor}"></Button>
+
+                <Button x:Name="btnLeadGen" Grid.Column="1" Text="Lead Generator" FontSize="Large"  TextColor="White"  BackgroundColor="{StaticResource MainBackgroundColor}"></Button>
+                <Button Grid.Row="1" Text="Empty 2" FontSize="Large" TextColor="White"></Button>
+                <Button Grid.Row="1" Grid.Column="1" Text="Empty 3" FontSize="Large" TextColor="White" ></Button>
+                -->
+            </Grid>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

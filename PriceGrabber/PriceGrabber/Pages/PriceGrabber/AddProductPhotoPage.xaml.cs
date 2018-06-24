@@ -15,7 +15,6 @@ namespace PriceGrabber.Pages.PriceGrabber
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AddProductPhotoPage : CustomNavigationPage
     {
-        public List<string> Brands = new List<string>() { "HP", "Samsung", "Huawei" };
         private PriceGrabberItem PriceGrabberItem;
 
         public AddProductPhotoPage(ContentPage parent, PriceGrabberItem item) : base()
@@ -29,14 +28,13 @@ namespace PriceGrabber.Pages.PriceGrabber
 
         private void Initilize()
         {
-            pkrBrand.PickerControl.PlaceHolder = "Select Brand...";
-            entryProductName.Placeholder = "Product Name...";
-            entryPrice.Placeholder = "Price in local currency";
-            entryPrice.Keyboard = Keyboard.Numeric;
-            entryPrice.TextChanged += EntryPrice_TextChanged;
+            pkrBrand.EntryControl.Placeholder = "Brand...";
+            pkrProductName.EntryControl.Placeholder = "Product Name...";
+            pkrPrice.EntryControl.Placeholder = "Price in local currency";
+            pkrPrice.EntryControl.Keyboard = Keyboard.Numeric;
+            pkrPrice.EntryControl.TextChanged += EntryPrice_TextChanged;
             entryComment.PlaceHolder = "Comments are welcome";
             btnDone.Text = "Submit";
-            SetBrands();
 
             var imageTapGR = new TapGestureRecognizer();
             imageTapGR.Tapped += GetNewImage;
@@ -54,14 +52,36 @@ namespace PriceGrabber.Pages.PriceGrabber
             newImage.GetStream().CopyTo(stream);
             if (Device.RuntimePlatform == Device.Android && stream?.ToArray()?.Length > 50000)
             {
-                var image = DependencyService.Get<IMediaHelper>().ResizeImage(stream.ToArray(), 300, 300);
+                var image = DependencyService.Get<IMediaHelper>().ResizeImage(stream.ToArray(), 1024, 1024);
                 if (image == null) return;
                 stream = new MemoryStream(image);
             }
             imgProduct.Source = ImageSource.FromStream(() => new MemoryStream(stream.ToArray()));
 
-            var imageText = await GoogleVisionApi.GoogleVision.GetTextFromImage(stream.ToArray());
-            entryComment.Text = imageText?.responses?.FirstOrDefault()?.textAnnotations?.FirstOrDefault().description;
+            RecognizeImageText(stream.ToArray());
+        }
+
+        private async void RecognizeImageText(byte[] image)
+        {
+            var imageText = await GoogleVisionApi.GoogleVision.GetTextFromImage(image);
+
+            var recWords = imageText?.responses?.FirstOrDefault()?.textAnnotations;
+            if ((recWords?.Count ?? 0) > 0)
+            {
+                pkrBrand.PickerControl.Items.Clear();
+                pkrProductName.PickerControl.Items.Clear();
+                pkrPrice.PickerControl.Items.Clear();
+                for (int i = 1; i < recWords.Count; i++)
+                {
+                    var txt = recWords[i].description;
+                    Decimal.TryParse(txt, out decimal price);
+                    pkrBrand.PickerControl.Items.Add(txt);
+                    pkrProductName.PickerControl.Items.Add(txt);
+                    if (price > 0)
+                        pkrPrice.PickerControl.Items.Add(price.ToString());
+                }
+            }
+            //entryComment.Text = recWords[0].description;
         }
 
         private void EntryPrice_TextChanged(object sender, TextChangedEventArgs e)
@@ -72,13 +92,8 @@ namespace PriceGrabber.Pages.PriceGrabber
                 if (decimalSeparatorIdx == -1) return;
                 var decimalPartWithDot = e.NewTextValue.Substring(decimalSeparatorIdx, e.NewTextValue.Length - decimalSeparatorIdx);
                 if (decimalPartWithDot.Length > 3)
-                    entryPrice.Text = e.OldTextValue;
+                    pkrPrice.EntryControl.Text = e.OldTextValue;
             }
-        }
-
-        private void SetBrands()
-        {
-            pkrBrand.PickerControl.ItemsSource = Brands;
         }
 
         private async void BtnDone_Clicked(object sender, EventArgs e)
@@ -87,8 +102,8 @@ namespace PriceGrabber.Pages.PriceGrabber
             PriceGrabberItem.Product = new PriceGrabberProduct()
             {
                 BrandName = pkrBrand.PickerControl.SelectedItem?.ToString(),
-                Name = entryProductName.Text,
-                Price = Converters.ToDecimalSafe(entryPrice.Text)
+                Name = pkrProductName.EntryControl.Text,
+                Price = Converters.ToDecimalSafe(pkrPrice.EntryControl.Text)
             };
 
             await App.Current.MainPage.DisplayAlert("Done", "Product info was added!", "OK");

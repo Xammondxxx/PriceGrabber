@@ -24,19 +24,22 @@ namespace PriceGrabber.Pages
 
         public void Initilize()
         {
-            mainGrid.WidthRequest = StaticDeviceInfo.WidthDp * 0.8;
-            mainGrid.HeightRequest = mainGrid.WidthRequest;
-            btnGrabber.Clicked += BtnGrabber_Clicked;
-            btnLeadGen.Clicked += BtnLeadGen_Clicked;
-            btnLeadGen.FontSize = btnGrabber.FontSize = 18;
+            var tgr = new TapGestureRecognizer();
+            tgr.Tapped += LeadGeneratorClicked;
+            FrameLeadGenerator.GestureRecognizers.Add(tgr);
+            ImageLeadGenerator.GestureRecognizers.Add(tgr);
+            tgr = new TapGestureRecognizer();
+            tgr.Tapped += PriceGrabberClicked;
+            FramePriceGrabber.GestureRecognizers.Add(tgr);
+            ImagePriceGrabber.GestureRecognizers.Add(tgr);
         }
 
-        private void BtnLeadGen_Clicked(object sender, EventArgs e)
+        private void LeadGeneratorClicked(object sender, EventArgs e)
         {
             App.Current.MainPage = new LeadGeneratorPage();
         }
 
-        private void BtnGrabber_Clicked(object sender, EventArgs e)
+        private void PriceGrabberClicked(object sender, EventArgs e)
         {
             App.Current.MainPage = new AddressPage(null);
         }

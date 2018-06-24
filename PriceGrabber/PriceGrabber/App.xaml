@@ -4,7 +4,6 @@
              x:Class="PriceGrabber.App">
 	<Application.Resources>
         <ResourceDictionary>
-
             <Color x:Key="MainBackgroundColor">#0096D6</Color>
         </ResourceDictionary>
 

@@ -22,13 +22,22 @@ namespace PriceGrabber.Pages
         {
             InitializeComponent();
             InitializeControls();
-
         }
 
         private void InitializeControls()
         {
             btnLogin.WidthRequest = StaticDeviceInfo.WidthDp * 0.35;
             btnLogin.Clicked += BtnLogin_Clicked;
+
+            var tapGesture = new TapGestureRecognizer();
+            tapGesture.Tapped += GetSupportTapped;
+            LblGetSupport.GestureRecognizers.Add(tapGesture);
+            LblGetSupport.Text = "Get support";
+        }
+
+        private void GetSupportTapped(object sender, EventArgs e)
+        {
+            ShowBrowser("Support", "https://app-designer.itcs.hp.com/form/view/243?PullToRefresh=false");
         }
 
         private async void BtnLogin_Clicked(object sender, EventArgs e)

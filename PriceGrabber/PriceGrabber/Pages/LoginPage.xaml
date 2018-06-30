@@ -1,21 +1,32 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PriceGrabber.Pages.LoginPage">
     <ContentPage.Content>
         <Grid>
-            <Button
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60*"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="20*"/>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0"
                 x:Name="btnLogin"
                 Text="LOG IN" TextColor="White" BackgroundColor="{StaticResource MainBackgroundColor}" 
                 HeightRequest="50" 
                 HorizontalOptions="CenterAndExpand"
-                VerticalOptions="CenterAndExpand" />
-            <ActivityIndicator 
+                VerticalOptions="End" />
+
+            <Label Grid.Row="2" HorizontalOptions="FillAndExpand" VerticalOptions="Start" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" 
+                            x:Name="LblGetSupport"
+                            TextColor="White" 
+                            FontSize="Medium"
+                            FontFamily="{StaticResource MainFont}"/>
+            
+            <ActivityIndicator Grid.Row="0" Grid.RowSpan="3"
                 x:Name="activityIndicator" IsVisible="False" HeightRequest="60" 
                 HorizontalOptions="CenterAndExpand"
                 VerticalOptions="CenterAndExpand"
-                Scale ="2.0"
-                               />
+                Scale ="2.0"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

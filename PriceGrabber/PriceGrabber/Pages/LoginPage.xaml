@@ -3,30 +3,32 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PriceGrabber.Pages.LoginPage">
     <ContentPage.Content>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="60*"/>
-                <RowDefinition Height="20*"/>
-                <RowDefinition Height="20*"/>
-            </Grid.RowDefinitions>
-            <Button Grid.Row="0"
-                x:Name="btnLogin"
-                Text="LOG IN" TextColor="White" BackgroundColor="{StaticResource MainBackgroundColor}" 
-                HeightRequest="50" 
-                HorizontalOptions="CenterAndExpand"
-                VerticalOptions="End" />
+        <StackLayout x:Name="SLContent">
+            <Grid x:Name="GridLogin" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                </Grid.RowDefinitions>
+                <Button Grid.Row="0"
+                    x:Name="btnLogin"
+                    Text="LOG IN" TextColor="White" BackgroundColor="{StaticResource MainBackgroundColor}" 
+                    HeightRequest="50" 
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="End" />
 
-            <Label Grid.Row="2" HorizontalOptions="FillAndExpand" VerticalOptions="Start" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" 
-                            x:Name="LblGetSupport"
-                            TextColor="White" 
-                            FontSize="Medium"
-                            FontFamily="{StaticResource MainFont}"/>
+                <Label Grid.Row="2" HorizontalOptions="FillAndExpand" VerticalOptions="Start" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" 
+                                x:Name="LblGetSupport"
+                                TextColor="{StaticResource MainBackgroundColor}" 
+                                FontSize="Medium"
+                       />
             
-            <ActivityIndicator Grid.Row="0" Grid.RowSpan="3"
-                x:Name="activityIndicator" IsVisible="False" HeightRequest="60" 
-                HorizontalOptions="CenterAndExpand"
-                VerticalOptions="CenterAndExpand"
-                Scale ="2.0"/>
-        </Grid>
+                <ActivityIndicator Grid.Row="0" Grid.RowSpan="3"
+                    x:Name="activityIndicator" IsVisible="False" HeightRequest="60" 
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand"
+                    Scale ="2.0"/>
+            </Grid>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

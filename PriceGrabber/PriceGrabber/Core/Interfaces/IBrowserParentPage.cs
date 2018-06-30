@@ -16,5 +16,6 @@ namespace PriceGrabber.Core
         void SubLinkRequested(object sender, UrlData urlData);
         void ExternalLinkRequested(object sender, string url);
         void DocLinkRequested(object sender, string url);
+        bool BackButtonPressed();
     }
 }

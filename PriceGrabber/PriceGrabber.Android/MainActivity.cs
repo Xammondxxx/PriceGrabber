@@ -13,9 +13,9 @@ using Android.Webkit;
 using System.Threading.Tasks;
 using Android.Support.V4.App;
 using Android.Support.V4.Content;
-using PriceGrabber.Core;
 using Android.Locations;
 using Plugin.Permissions;
+using PriceGrabber.Core;
 
 namespace PriceGrabber.Droid
 {
@@ -260,6 +260,12 @@ namespace PriceGrabber.Droid
 
         public void OnStatusChanged(string provider, [GeneratedEnum] Availability status, Bundle extras)
         {
+        }
+
+        public override void OnBackPressed()
+        {
+            if (App.Instance.BackButtonPressed()) return;
+            base.OnBackPressed();
         }
     }
 }

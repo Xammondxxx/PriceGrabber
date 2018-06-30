@@ -37,7 +37,7 @@ namespace PriceGrabber.Pages
 
         private void GetSupportTapped(object sender, EventArgs e)
         {
-            ShowBrowser("Support", "https://app-designer.itcs.hp.com/form/view/243?PullToRefresh=false");
+            ShowBrowser("Support", "https://app-designer.itcs.hp.com/form/view/243?AppId=PriceGrabber&PullToRefresh=false");
         }
 
         private async void BtnLogin_Clicked(object sender, EventArgs e)
@@ -75,24 +75,33 @@ namespace PriceGrabber.Pages
             return false;
         }
 
+        private WebViewerView browser;
         public void ShowBrowser(string title, string url, BrowserType type = BrowserType.Cached, bool hideTitle = false)
         {
             if (string.IsNullOrEmpty(url)) return;
             var urldata = UrlParser.Parse(url);
             if (string.IsNullOrEmpty(urldata.AbsoluteUrl) || !PGService.CheckConnection(true)) return;
 
-            var browser = new WebViewerView(type, this, true, true, showTitlePanel: !hideTitle);
-            browser.OnReturn += BrowserOnReturn;
+            if (browser == null)
+            {
+                browser = new WebViewerView(type, this, true, true, showTitlePanel: !hideTitle);
+                browser.WidthRequest = Bounds.Width;
+                browser.HeightRequest = Bounds.Height;
+                browser.OnReturn += BrowserOnReturn;
+            }
             browser.Uri = urldata.AbsoluteUrl;
             browser.GoHome();
             browser.Title = title;
             browser.IsVisible = true;
+            GridLogin.IsVisible = false;
+            SLContent.Children.Add(browser);
+
         }
 
         private void BrowserOnReturn()
         {
-            SetOrientation(Orientation.Portrait);
-            App.Current.MainPage = new LoginPage();
+            browser.IsVisible = false;
+            GridLogin.IsVisible = true;
         }
 
         private static void SetOrientation(Orientation orientation)
@@ -189,6 +198,13 @@ namespace PriceGrabber.Pages
         private async Task<bool> LoginFinish(string item2)
         {
             App.Current.MainPage = new MainPage();
+            return true;
+        }
+
+        public bool BackButtonPressed()
+        {
+            if (browser == null) return false;
+            BrowserOnReturn();
             return true;
         }
     }

@@ -6,12 +6,12 @@
     android:minWidth="25px"
     android:minHeight="25px"
     android:gravity="center">
-    <ImageView
+<!--<ImageView
         android:src="@drawable/mcnlogo"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:id="@+id/imageView1"
-        android:layout_gravity="center" />
+        android:layout_gravity="center" />-->
     <ImageView
         android:id="@+id/animated_loading"
         android:layout_width="wrap_content"

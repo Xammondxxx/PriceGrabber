@@ -18,11 +18,11 @@ namespace PriceGrabber.Pages
         public MainPage()
         {
             InitializeComponent();
-            Initilize();
+            Initialize();
 
         }
 
-        public void Initilize()
+        public void Initialize()
         {
             var tgr = new TapGestureRecognizer();
             tgr.Tapped += LeadGeneratorClicked;

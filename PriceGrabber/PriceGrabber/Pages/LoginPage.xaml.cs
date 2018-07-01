@@ -1,6 +1,7 @@
 ﻿using PriceGrabber.Core;
 using PriceGrabber.CustomControls;
 using PriceGrabber.DependencyServices;
+using PriceGrabber.Helpers;
 using PriceGrabber.Views;
 using PriceGrabber.WebService;
 using System;
@@ -26,8 +27,8 @@ namespace PriceGrabber.Pages
 
         private void InitializeControls()
         {
-            btnLogin.WidthRequest = StaticDeviceInfo.WidthDp * 0.35;
-            btnLogin.Clicked += BtnLogin_Clicked;
+            BtnLogin.WidthRequest = StaticDeviceInfo.WidthDp * 0.35;
+            BtnLogin.Clicked += BtnLoginClicked;
 
             var tapGesture = new TapGestureRecognizer();
             tapGesture.Tapped += GetSupportTapped;
@@ -40,18 +41,36 @@ namespace PriceGrabber.Pages
             ShowBrowser("Support", "https://app-designer.itcs.hp.com/form/view/243?AppId=PriceGrabber&PullToRefresh=false");
         }
 
-        private async void BtnLogin_Clicked(object sender, EventArgs e)
+        protected override async void OnAppearing()
         {
-            activityIndicator.IsRunning = true;
-            activityIndicator.IsVisible = true;
-            await Task.Delay(100);
-            await StartLogin();
-            activityIndicator.IsRunning = false;
-            activityIndicator.IsVisible = false;
+            await Task.Delay(200);
+            if (!string.IsNullOrWhiteSpace(Core.Settings.AuthToken))
+                BtnLoginClicked(null, null);
         }
 
-        private async Task<bool> StartLogin()
+        private async void BtnLoginClicked(object sender, EventArgs e)
         {
+            if (BtnLogin.Opacity < 1) return;
+            if (!PGService.CheckConnection(true)) return;
+            Indicator.IsRunning = true;
+            Indicator.IsVisible = true;
+            BtnLogin.Opacity = 0.4;
+            if (!string.IsNullOrWhiteSpace(Core.Settings.AuthToken))
+            {
+                // Check if authtoken about to expired
+                var res = await LoginHelper.CheckAuthTokenExpiration();
+                if (!res)
+                    LoginFailed();
+                else
+                    LoginFinish();
+            }
+            else
+                LoginStart();
+        }
+
+        private async Task<bool> LoginStart()
+        {
+            
             DependencyService.Get<IWebCacheHelper>().ClearCookies();
             var res = await PGService.GetHpIdRedirectLink();
 
@@ -154,15 +173,14 @@ namespace PriceGrabber.Pages
         {
         }
 
-
         private bool _loginCallbackProcess;
         private bool _authTokenReceived;
         public async void LoginCallback(string callbackUrl)
         {
             try
             {
-                btnLogin.IsEnabled = false;
-                btnLogin.BackgroundColor = Color.LightGray;
+                BtnLogin.IsEnabled = false;
+                BtnLogin.BackgroundColor = Color.LightGray;
             }
             catch(Exception ex) {
 
@@ -182,11 +200,20 @@ namespace PriceGrabber.Pages
                 if (res.Item1)
                 {
                     _authTokenReceived = true;
-                    await LoginFinish(res.Item2);
+                    Core.Settings.AuthToken = res.Item2;
+                    Core.Settings.AuthTokenExpiredAt = res.Item3;
+                    var ssoData = await PGService.GetSSOData();
+                    if (ssoData == null)
+                    {
+                        LoginFailed();
+                        return;
+                    }
+                    Core.Settings.SsoData = ssoData;
+                    LoginFinish();
                 }
                 else
                 {
-                   
+                    LoginFailed();
                 }
             }
             finally
@@ -195,10 +222,25 @@ namespace PriceGrabber.Pages
             }
         }
 
-        private async Task<bool> LoginFinish(string item2)
+        private void LoginFailed()
         {
+            //await HPHService.SignOut();
+            Core.Settings.AuthToken = string.Empty;
+            Core.Settings.AuthTokenExpiredAt = DateTime.MinValue;
+            Core.Settings.SsoData = null;
+            _authTokenReceived = false;
+            GridLogin.IsVisible = true;
+            Indicator.IsRunning = false;
+            Indicator.IsVisible = false;
+            BtnLogin.Opacity = 1;
+        }
+
+        private void LoginFinish()
+        {
+            Indicator.IsRunning = false;
+            Indicator.IsVisible = false;
+            FontHelper.SetFonts(false);
             App.Current.MainPage = new MainPage();
-            return true;
         }
 
         public bool BackButtonPressed()

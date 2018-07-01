@@ -202,6 +202,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <AndroidAsset Include="Assets\cyrillic-light-ttf.ttf" />
+    <AndroidAsset Include="Assets\cyrillic-regular-ttf.ttf" />
+    <AndroidAsset Include="Assets\FontAwesome.ttf" />
+    <AndroidAsset Include="Assets\greek-light-ttf.ttf" />
+    <AndroidAsset Include="Assets\greek-regular-ttf.ttf" />
+    <AndroidAsset Include="Assets\HPSimplified_It.ttf" />
+    <AndroidAsset Include="Assets\HPSimplified_Lt.ttf" />
+    <AndroidAsset Include="Assets\HPSimplified_LtIt.ttf" />
+    <AndroidAsset Include="Assets\HPSimplified_Rg.ttf" />
+    <AndroidAsset Include="Assets\latin-e-light-ttf.ttf" />
+    <AndroidAsset Include="Assets\latin-e-regular-ttf.ttf" />
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
@@ -371,6 +382,21 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-nodpi\loading_17.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-nodpi\user_avatar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-nodpi\avatar_mask.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-nodpi\download.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-nodpi\gallery.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-nodpi\photo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

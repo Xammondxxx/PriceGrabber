@@ -32,6 +32,9 @@ namespace PriceGrabber.Pages
             tgr.Tapped += PriceGrabberClicked;
             FramePriceGrabber.GestureRecognizers.Add(tgr);
             ImagePriceGrabber.GestureRecognizers.Add(tgr);
+            tgr = new TapGestureRecognizer();
+            tgr.Tapped += ProfileClicked;
+            ImgProfile.GestureRecognizers.Add(tgr);
         }
 
         private void LeadGeneratorClicked(object sender, EventArgs e)
@@ -42,6 +45,11 @@ namespace PriceGrabber.Pages
         private void PriceGrabberClicked(object sender, EventArgs e)
         {
             App.Current.MainPage = new AddressPage(null);
+        }
+
+        private void ProfileClicked(object sender, EventArgs e)
+        {
+            App.Current.MainPage = new ProfilePage();
         }
 
         protected override void OnAppearing()

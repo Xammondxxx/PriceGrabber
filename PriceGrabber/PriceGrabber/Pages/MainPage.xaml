@@ -27,9 +27,9 @@
                         <ColumnDefinition Width="4*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Image Grid.Column="0" Source="menu.png" HorizontalOptions="Start" VerticalOptions="Center" HeightRequest="20" WidthRequest="20" Aspect="AspectFit"></Image>
-                    <Image Grid.Column="1" Source="hphero.png" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="28" WidthRequest="120" Aspect="AspectFit"></Image>
-                    <Image Grid.Column="2" Source="user.png" HorizontalOptions="End" VerticalOptions="Center" HeightRequest="20" WidthRequest="20" Aspect="AspectFit"></Image>
+                    <Image Grid.Column="0" x:Name="ImgMenu" Source="menu.png" HorizontalOptions="Start" VerticalOptions="Center" HeightRequest="20" WidthRequest="20" Aspect="AspectFit"></Image>
+                    <Image Grid.Column="1" x:Name="ImgTitle" Source="hphero.png" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="28" WidthRequest="120" Aspect="AspectFit"></Image>
+                    <Image Grid.Column="2" x:Name="ImgProfile" Source="user.png" HorizontalOptions="End" VerticalOptions="Center" HeightRequest="20" WidthRequest="20" Aspect="AspectFit"></Image>
                 </Grid>
 
                 <Frame Grid.Row="1" Grid.Column="0" BorderColor="White" CornerRadius="3" BackgroundColor="#f38237" Padding="1" Margin="1" x:Name="FrameLeadGenerator">

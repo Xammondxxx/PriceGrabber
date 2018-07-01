@@ -4,7 +4,30 @@
              x:Class="PriceGrabber.App">
 	<Application.Resources>
         <ResourceDictionary>
+            <OnPlatform x:TypeArguments="x:String" iOS="HP Simplified" Android="HPSimplified_Lt.ttf#HP Simplified" x:Key="MainFont"/>
+            <OnPlatform x:TypeArguments="x:String" iOS="HP Simplified" Android="HPSimplified_It.ttf#HP Simplified" x:Key="MainFontItalic"/>
+            <OnPlatform x:TypeArguments="x:String" iOS="HP Simplified" Android="HPSimplified_Rg.ttf#HP Simplified" x:Key="MainFontBold"/>
+            <OnPlatform x:TypeArguments="x:String" iOS="HP Simplified" Android="HPSimplified_Lt.ttf" x:Key="MainFontName"/>
+
             <Color x:Key="MainBackgroundColor">#0096D6</Color>
+            <Color x:Key="PageBackgroundColor">#F7F4F0</Color>
+            <Color x:Key="ViewBackgroundColor">#F2F2F2</Color>
+            <Color x:Key="ListBackgroundColor">#FFFFFF</Color>
+            <Color x:Key="ListSubTitleBackgroundColor">#CCCCCC</Color>
+            <Color x:Key="ListSubTitleColor">#000000</Color>
+            <Color x:Key="LightBlue">#0096D6</Color>
+            <Color x:Key="DarkBlue">#1159A0</Color>
+            <Color x:Key="LabelColor">#A0A0A0</Color>
+            <Color x:Key="SplitColor">#C6C6C6</Color>
+            <Color x:Key="ErrorColor">#EA4463</Color>
+            <Color x:Key="SuccessColor">#44EA77</Color>
+            <Color x:Key="InfoColor">#0096D6</Color>
+
+            <Style x:Key="PagePaddingStyle" TargetType="Page">
+                <Setter Property="BackgroundColor" Value="{StaticResource PageBackgroundColor}"/>
+                <!--<Setter Property="Padding" Value="{StaticResource PagePadding}"/>-->
+            </Style>
+
         </ResourceDictionary>
 
     </Application.Resources>

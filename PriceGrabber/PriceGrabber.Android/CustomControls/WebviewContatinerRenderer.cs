@@ -236,11 +236,11 @@ namespace PriceGrabber.Droid.CustomControls
 
                     if (urldata.AbsoluteUrl.StartsWith(PGService.ApiServerUrl, StringComparison.InvariantCultureIgnoreCase))
                     {
-                        if (!string.IsNullOrEmpty(PGService.CurrentAuthToken))
+                        if (!string.IsNullOrEmpty(Core.Settings.AuthToken))
                         {
                             var headers = new Dictionary<string, string>
                             {
-                                { "Authorization", "Bearer " + PGService.CurrentAuthToken }
+                                { "Authorization", "Bearer " + Core.Settings.AuthToken }
                             };
                             Native.LoadUrl(urldata.AbsoluteUrl, headers);
                         }

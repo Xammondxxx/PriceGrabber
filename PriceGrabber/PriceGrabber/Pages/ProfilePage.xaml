@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PriceGrabber.Pages.ProfilePage">
+    <ContentPage.Content>
+        <Grid BackgroundColor="{StaticResource ViewBackgroundColor}" RowSpacing="0" ColumnSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="70*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <Grid Grid.Row="0" x:Name="GridHeader" BackgroundColor="{StaticResource LightBlue}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="45*"/>
+                    <RowDefinition Height="14*"/>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="30*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20*"/>
+                    <ColumnDefinition Width="60*"/>
+                    <ColumnDefinition Width="20*"/>
+                </Grid.ColumnDefinitions>
+
+                <Image Grid.Row="0" Grid.Column="1" x:Name="ImgPhoto" HorizontalOptions="Center" VerticalOptions="Fill" BackgroundColor="{StaticResource LightBlue}" 
+                    Margin="5,8,0,0" Aspect="AspectFill" />
+                <Image Grid.Row="0" Grid.Column="1" x:Name="ImgMask" Source="avatar_mask" HorizontalOptions="Center" VerticalOptions="Fill"  
+                    Margin="5,8,0,0" Aspect="AspectFill"/>
+                <Label Grid.Row="1" Grid.Column="1" Text="{Binding FullName}" FontFamily="{StaticResource MainFont}" TextColor="White" FontSize="Medium"
+                    HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold"/>
+                <Label Grid.Row="2" Grid.Column="1" Text="{Binding Email}" FontFamily="{StaticResource MainFont}" TextColor="White" FontSize="Micro"
+                    HorizontalOptions="Center" VerticalOptions="Center"/>
+                <BoxView Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" BackgroundColor="White" Margin="20,0,20,0"/>
+                <StackLayout Grid.Row="4" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalOptions="Center" >
+                    <Image x:Name="PhotoBtn"  Grid.Column="3" Source="photo" HorizontalOptions="Center" VerticalOptions="Center" 
+                        Margin="7,7,7,7" WidthRequest="40" BackgroundColor="Transparent">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="BtnTakePhotoClicked"/>
+                        </Image.GestureRecognizers>
+                    </Image>
+                    <Image  Grid.Column="4" Source="gallery" HorizontalOptions="Center" VerticalOptions="Center"
+                        Margin="7,7,7,7"  WidthRequest="40" BackgroundColor="Transparent">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="BtnPickPhotoClicked"/>
+                        </Image.GestureRecognizers>
+                    </Image>
+                    <BoxView Grid.Column="5" HorizontalOptions="Center" Color="White" WidthRequest="1" Margin="0,7,0,7"/>
+                    <Image  Grid.Column="6" Source="download" HorizontalOptions="Center" VerticalOptions="Center" Margin="7,7,0,7" 
+                        WidthRequest="40" BackgroundColor="Transparent">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="BtnDownloadClicked"/>
+                        </Image.GestureRecognizers>
+                    </Image>
+                    <Label x:Name="LblInsignia" Grid.Column="7" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,2,7,2" HorizontalTextAlignment="Center"
+                    Text="Download HP Hero Insignia" FontFamily="{StaticResource MainFont}" TextColor="White" FontSize="10" WidthRequest="45">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="BtnDownloadClicked"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </StackLayout>
+            </Grid>
+
+            <!-- Content -->
+            <Grid Grid.Row="1">
+                <ScrollView BackgroundColor="{StaticResource ListBackgroundColor}" Margin="7,7,7,7" Padding="7,0,7,0" Orientation="Vertical" IsClippedToBounds="true">
+                    <StackLayout Orientation="Vertical">
+                        <StackLayout Orientation="Horizontal" BackgroundColor="{StaticResource ListSubTitleBackgroundColor}" Margin="-7,0,-7,0">
+                            <Label x:Name="LblPersonalDetails" FontFamily="{StaticResource MainFont}" FontSize="Small" TextColor="{StaticResource ListSubTitleColor}" Margin="7,3,7,3"/>
+                        </StackLayout>
+
+                        <Label x:Name="LblWorkPhone" FontFamily="{StaticResource MainFont}" FontSize="Small"/>
+                        <Label Text="{Binding WorkPhone}" FontFamily="{StaticResource MainFont}" TextColor="{StaticResource LabelColor}" FontSize="Small"/>
+                        <BoxView HorizontalOptions="FillAndExpand" HeightRequest="1" BackgroundColor="{StaticResource SplitColor}"/>
+
+                        <Label x:Name="LblMobilephone" FontFamily="{StaticResource MainFont}" FontSize="Small"/>
+                        <Label Text="{Binding MobilePhone}" FontFamily="{StaticResource MainFont}" TextColor="{StaticResource LabelColor}" FontSize="Small"/>
+                        <BoxView HorizontalOptions="FillAndExpand" HeightRequest="1" BackgroundColor="{StaticResource SplitColor}"/>
+
+                        <Label x:Name="LblLanguage" FontFamily="{StaticResource MainFont}" FontSize="Small"/>
+                        <Label Text="{Binding Language}" FontFamily="{StaticResource MainFont}" TextColor="{StaticResource LabelColor}" FontSize="Small"/>
+                        <BoxView HorizontalOptions="FillAndExpand" HeightRequest="1" BackgroundColor="{StaticResource SplitColor}"/>
+
+                        <StackLayout Orientation="Horizontal" BackgroundColor="{StaticResource ListSubTitleBackgroundColor}" Margin="-7,0,-7,0">
+                            <Label x:Name="LblCompanyDetails" FontFamily="{StaticResource MainFont}" FontSize="Small" TextColor="{StaticResource ListSubTitleColor}" Margin="7,3,7,3"/>
+                        </StackLayout>
+
+                        <Label x:Name="LblCompany" FontFamily="{StaticResource MainFont}" FontSize="Small"/>
+                        <Label Text="{Binding CompanyFullName}" FontFamily="{StaticResource MainFont}" TextColor="{StaticResource LabelColor}" FontSize="Small"/>
+                        <BoxView HorizontalOptions="FillAndExpand" HeightRequest="1" BackgroundColor="{StaticResource SplitColor}"/>
+
+                        <Label x:Name="LblCompanyPhone" FontFamily="{StaticResource MainFont}" FontSize="Small"/>
+                        <Label Text="{Binding PartnerPhone}" FontFamily="{StaticResource MainFont}" TextColor="{StaticResource LabelColor}" FontSize="Small"/>
+                        <BoxView HorizontalOptions="FillAndExpand" HeightRequest="1" BackgroundColor="{StaticResource SplitColor}"/>
+
+                        <Label x:Name="LblCountry" FontFamily="{StaticResource MainFont}" FontSize="Small"/>
+                        <Label Text="{Binding Country}" FontFamily="{StaticResource MainFont}" TextColor="{StaticResource LabelColor}" FontSize="Small"/>
+                        <BoxView HorizontalOptions="FillAndExpand" HeightRequest="1" BackgroundColor="{StaticResource SplitColor}"/>
+
+                        <Label x:Name="LblCity" FontFamily="{StaticResource MainFont}" FontSize="Small"/>
+                        <Label Text="{Binding City}" FontFamily="{StaticResource MainFont}" TextColor="{StaticResource LabelColor}" FontSize="Small"/>
+                        <BoxView HorizontalOptions="FillAndExpand" HeightRequest="1" BackgroundColor="{StaticResource SplitColor}"/>
+
+                        <Label x:Name="LblAddress" FontFamily="{StaticResource MainFont}" FontSize="Small"/>
+                        <Label Text="{Binding CompanyAddress}" FontFamily="{StaticResource MainFont}" TextColor="{StaticResource LabelColor}" FontSize="Small"/>
+                        <BoxView HorizontalOptions="FillAndExpand" HeightRequest="1" BackgroundColor="{StaticResource SplitColor}"/>
+
+                        <Button x:Name="BtnUpdateDetails" BackgroundColor="{StaticResource LightBlue}" BorderRadius="5" TextColor="White" Margin="30,15,30,15"
+                            HeightRequest="50" FontFamily="{StaticResource MainFont}" Clicked="BtnUpdateDetailsClicked"/>
+                    </StackLayout>
+                </ScrollView>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

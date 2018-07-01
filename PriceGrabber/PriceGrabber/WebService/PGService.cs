@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Plugin.Connectivity;
 using PriceGrabber.Core;
+using PriceGrabber.Core.Data;
 using PriceGrabber.DependencyServices;
 using System;
 using System.Collections.Generic;
@@ -37,8 +38,6 @@ namespace PriceGrabber.WebService
         public static NativeCookieHandler HttpCookieHandler { get; private set; }
         public static HttpClient HttpClient { get; private set; }
 
-        public static string CurrentAuthToken;
-
 #if PRODUCTION
         private const ApiServerKind ServerKind = ApiServerKind.Production;
 #else
@@ -70,7 +69,7 @@ namespace PriceGrabber.WebService
 
             if (string.IsNullOrEmpty(url)) return res;
 
-            if (string.IsNullOrEmpty(CurrentAuthToken) && useParams)
+            if (string.IsNullOrEmpty(Settings.AuthToken) && useParams)
             {
                 var urldata = UrlParser.Parse(url);
                 urldata.AddParam("CountryCode", DependencyService.Get<ILocalize>().GetCurrentCountry());
@@ -92,7 +91,7 @@ namespace PriceGrabber.WebService
             {
                 _isBusy = true;
                 Debug.WriteLine("{0} HttpClient Request: {1}", reqType, res.Request);
-                Debug.WriteLine("CurrentAuthToken: {0}", CurrentAuthToken);
+                Debug.WriteLine("CurrentAuthToken: {0}", Settings.AuthToken);
                  var watch = Stopwatch.StartNew();
                 HttpResponseMessage response = null;
                 var isCheckEtag = reqType == RequestType.CheckETag;
@@ -100,24 +99,24 @@ namespace PriceGrabber.WebService
                 switch (reqType)
                 {
                     case RequestType.Post:
-                        if (!string.IsNullOrEmpty(CurrentAuthToken))
-                            HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", CurrentAuthToken);
+                        if (!string.IsNullOrEmpty(Settings.AuthToken))
+                            HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Settings.AuthToken);
                         //response = await HttpClient.PostAsync(url, content);
                         response = await HttpClient.PostAsync(url, content).ConfigureAwait(false); //.Result;
                         res.Response = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                         res.Result = response.IsSuccessStatusCode;
                         break;
                     case RequestType.Put:
-                        if (!string.IsNullOrEmpty(CurrentAuthToken))
-                            HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", CurrentAuthToken);
+                        if (!string.IsNullOrEmpty(Settings.AuthToken))
+                            HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Settings.AuthToken);
                         //response = await HttpClient.PostAsync(url, content);
                         response = await HttpClient.PutAsync(url, content).ConfigureAwait(false);
                         res.Response = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                         res.Result = response.IsSuccessStatusCode;
                         break;
                     case RequestType.Get:
-                        if (!string.IsNullOrEmpty(CurrentAuthToken))
-                            HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", CurrentAuthToken);
+                        if (!string.IsNullOrEmpty(Settings.AuthToken))
+                            HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Settings.AuthToken);
                         response = await HttpClient.GetAsync(url).ConfigureAwait(false); 
                         res.Response = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                         var msg = response.StatusCode.ToString();
@@ -130,8 +129,8 @@ namespace PriceGrabber.WebService
                         res.Result = response?.StatusCode == HttpStatusCode.OK;
                         break;
                     case RequestType.CheckETag:
-                        if (!string.IsNullOrEmpty(CurrentAuthToken))
-                            HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", CurrentAuthToken);
+                        if (!string.IsNullOrEmpty(Settings.AuthToken))
+                            HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Settings.AuthToken);
                         req = new HttpRequestMessage(HttpMethod.Head, url);
                         response = await HttpClient.SendAsync(req).ConfigureAwait(false);
                         res.Response = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -212,7 +211,7 @@ namespace PriceGrabber.WebService
         }
 
         //Tuple result, authtoken/errormessage 
-        public static async Task<Tuple<bool, string>> GetNewAuthToken(string url)
+        public static async Task<Tuple<bool, string, DateTime>> GetNewAuthToken(string url)
         {
             // Execute request
             var response = await ExecuteCommand(url, null, RequestType.Get, false);
@@ -224,7 +223,7 @@ namespace PriceGrabber.WebService
             }
             catch (Exception ex)
             {
-                return new Tuple<bool, string>(false, errMsg);
+                return new Tuple<bool, string, DateTime>(false, errMsg, DateTime.MinValue);
             }
 
             if (response.Result)
@@ -232,14 +231,77 @@ namespace PriceGrabber.WebService
                 var token = string.Empty;
                 if (content.ContainsKey("AuthToken"))
                     token = content["AuthToken"];
-                return string.IsNullOrWhiteSpace(token) ? new Tuple<bool, string>(false, errMsg) : new Tuple<bool, string>(true, token);
+                var expiresAt = DateTime.MinValue;
+                if (content.ContainsKey("ExpiresAt"))
+                    DateTime.TryParse(content["ExpiresAt"], out expiresAt);
+                return string.IsNullOrWhiteSpace(token) ? new Tuple<bool, string, DateTime>(false, errMsg, DateTime.MinValue) : new Tuple<bool, string, DateTime>(true, token, expiresAt);
             }
 
             if (response.Response.Contains("Message"))
                 errMsg = content["Message"];
-            return new Tuple<bool, string>(false, errMsg);
+            return new Tuple<bool, string, DateTime>(false, errMsg, DateTime.MinValue);
         }
 
-    }
+        //Tuple result, authtoken/errormessage, expiresAt 
+        public static async Task<Tuple<bool, string, DateTime>> RefreshAuthToken(string token)
+        {
+            // Execute request
+            var str = JsonConvert.SerializeObject(new { token });
+            var content = new StringContent(str, System.Text.Encoding.UTF8, "application/json");
 
+            // Execute request
+            var response = await ExecuteCommand(ApiServerUrl + PGConst.API_REFRESH_AUTH_TOKEN, content, RequestType.Post, false);
+            var errMsg = "Refresh AuthToken Error";
+            var expiresAt = DateTime.MinValue;
+            Dictionary<string, string> data = null;
+            try
+            {
+                data = JsonConvert.DeserializeObject<Dictionary<string, string>>(response.Response);
+            }
+            catch (Exception ex)
+            {
+                //GoogleAnalyticsHelper.SendException(Device.RuntimePlatform + ": Error deserialization RefreshToken response: " + ex.Message, false);
+                return new Tuple<bool, string, DateTime>(false, errMsg, expiresAt);
+            }
+
+            if (response.Result)
+            {
+                var newtoken = string.Empty;
+                if (data.ContainsKey("AuthToken"))
+                    newtoken = data["AuthToken"];
+                if (data.ContainsKey("ExpiresAt"))
+                    DateTime.TryParse(data["ExpiresAt"], out expiresAt);
+                return string.IsNullOrWhiteSpace(newtoken) ? new Tuple<bool, string, DateTime>(false, errMsg, expiresAt) : new Tuple<bool, string, DateTime>(true, newtoken, expiresAt);
+            }
+
+            if (data.ContainsKey("Message"))
+                errMsg = data["Message"];
+            return new Tuple<bool, string, DateTime>(false, errMsg, expiresAt);
+        }
+
+        class SSOItems
+        {
+            public string Email { get; set; }
+            public string DeviceId { get; set; }
+            public SsoData SsoData { get; set; }
+        }
+
+        public static async Task<SsoData> GetSSOData()
+        {
+            try
+            {
+                var response = await ExecuteCommand(ApiServerUrl + PGConst.API_CMD_SSO_DATA, null, RequestType.Get);
+                if (!response.Result) return null;
+                
+                var ssoitems = new SSOItems();
+                JsonConvert.PopulateObject(response.Response, ssoitems);
+                return ssoitems.SsoData;
+            }
+            catch (Exception e)
+            {
+                //Log.Add(e, "GetSSOData");
+                return null;
+            }
+        }
+    }
 }

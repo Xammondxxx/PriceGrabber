@@ -23,7 +23,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;PRODUCTION</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -45,6 +45,7 @@
     <Compile Include="Core\Attributes\TitleAttribute.cs" />
     <Compile Include="Core\Data\GeoLocation.cs" />
     <Compile Include="Core\Data\PriceGrabberItem.cs" />
+    <Compile Include="Core\Data\SsoData.cs" />
     <Compile Include="Core\Enums\Module.cs" />
     <Compile Include="Core\Interfaces\IBrowserParentPage.cs" />
     <Compile Include="Core\Interfaces\IMap.cs" />
@@ -70,14 +71,19 @@
     <Compile Include="DependencyServices\IMediaHelper.cs" />
     <Compile Include="DependencyServices\IOrientationService.cs" />
     <Compile Include="DependencyServices\IWebCacheHelper.cs" />
+    <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="GeoLocationService\CoordinatesToLocationInfo.cs" />
     <Compile Include="GeoLocationService\Data.cs" />
     <Compile Include="GeoLocationService\StoresInfoByLocation.cs" />
     <Compile Include="GoogleVisionApi\Data.cs" />
     <Compile Include="GoogleVisionApi\GoogleVisionApi.cs" />
     <Compile Include="Helpers\Converters.cs" />
+    <Compile Include="Helpers\FontHelper.cs" />
+    <Compile Include="Helpers\LocalizeHelper.cs" />
+    <Compile Include="Helpers\LoginHelper.cs" />
     <Compile Include="Helpers\MediaHelper.cs" />
     <Compile Include="Helpers\Settings.cs" />
+    <Compile Include="Helpers\UserHelper.cs" />
     <Compile Include="Pages\AppContentPage.cs" />
     <Compile Include="Pages\ContainerPage.xaml.cs">
       <DependentUpon>ContainerPage.xaml</DependentUpon>
@@ -93,6 +99,9 @@
     </Compile>
     <Compile Include="Pages\NaviagtionPanelView.xaml.cs">
       <DependentUpon>NaviagtionPanelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ProfilePage.xaml.cs">
+      <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\PriceGrabber\AddProductPhotoPage.xaml.cs">
       <DependentUpon>AddProductPhotoPage.xaml</DependentUpon>
@@ -237,6 +246,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CustomControls\EntryPicker.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\ProfilePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

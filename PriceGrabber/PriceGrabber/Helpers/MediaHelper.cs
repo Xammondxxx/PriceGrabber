@@ -1,5 +1,6 @@
 ﻿using Plugin.Media;
 using Plugin.Media.Abstractions;
+using PriceGrabber.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,21 +9,34 @@ using System.Threading.Tasks;
 
 namespace PriceGrabber.Helpers
 {
+    public enum MediaAction
+    {
+        Unknown,
+        PickPhotoFromGallery,
+        TakePhotoFromCamera
+    }
+
     public static class MediaHelper
     {
         static bool _gettingImage = false;
-        public static async Task<MediaFile> GetMedia()
+        public static async Task<MediaFile> GetMedia(MediaAction action = MediaAction.Unknown)
         {
             if (_gettingImage) return null;
             _gettingImage = false;
             MediaFile res = null;
             try
             {
+                if (action == MediaAction.Unknown)
+                {
+                    var strAction = await App.Current.MainPage.DisplayActionSheet("Choose action".Localize(), "Cancel".Localize(), null, "Pick Photo".Localize(), "Take Photo".Localize());
+                    await Task.Delay(300);
+                    if (strAction == "Pick Photo".Localize())
+                        action = MediaAction.PickPhotoFromGallery;
+                    else if (strAction == "Take Photo".Localize())
+                        action = MediaAction.TakePhotoFromCamera;
+                }
 
-                var action = await App.Current.MainPage.DisplayActionSheet("Выберите дейтвие:", "Отмена", null, "Выбрать фото", "Сделать фото");
-                await Task.Delay(300);
-
-                if (action == "Выбрать фото")
+                if (action == MediaAction.PickPhotoFromGallery)
                 {
                     /*if (Device.RuntimePlatform == Device.Android)
                     {
@@ -42,18 +56,18 @@ namespace PriceGrabber.Helpers
 
                     if (!CrossMedia.Current.IsPickPhotoSupported)
                     {
-                        await App.Current.MainPage.DisplayAlert("Галерея недоступна", "Нет прав на доступ к галерее фотографий.", "OK");
+                        await App.Current.MainPage.DisplayAlert("Gallery unavailable".Localize(), "You have no permissions for gallery".Localize(), "OK".Localize());
                         return null;
                     }
                     res = await CrossMedia.Current.PickPhotoAsync();
 
                     if (res == null)
                     {
-                        await App.Current.MainPage.DisplayAlert("", "Фото из галереи не получено!.", "OK");
+                        await App.Current.MainPage.DisplayAlert("Failure".Localize(), "Could not pick photo from gallery".Localize(), "OK".Localize());
                         return null;
                     }
                 }
-                else if (action == "Сделать фото")
+                else if (action == MediaAction.TakePhotoFromCamera)
                 {
                     /*if (Device.RuntimePlatform == Device.Android)
                     {
@@ -69,18 +83,18 @@ namespace PriceGrabber.Helpers
                         p = CrossMedia.Current.IsTakePhotoSupported;*/
                     if (!CrossMedia.Current.IsTakePhotoSupported)
                     {
-                        await App.Current.MainPage.DisplayAlert("Камера недоступна", "Нет прав на доступ к камере.", "OK");
+                        await App.Current.MainPage.DisplayAlert("Camera unavailable".Localize(), "You have no permissions for using camera".Localize(), "OK".Localize());
                         return null;
                     }
                     res = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
                     {
                         Directory = "Sample",
-                        Name = "CarImage.jpg"
+                        Name = "Sample.jpg"
                     });
 
                     if (res == null)
                     {
-                        await App.Current.MainPage.DisplayAlert("", "Фото с камеры не получено!.", "OK");
+                        await App.Current.MainPage.DisplayAlert("Failure".Localize(), "Could not take foto from camera".Localize(), "OK".Localize());
                         return res;
                     }
                 }
@@ -88,7 +102,7 @@ namespace PriceGrabber.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Ошибка", ex.Message, "OK");
+                await App.Current.MainPage.DisplayAlert("Error".Localize(), ex.Message, "OK".Localize());
                 return null;
             }
             finally

@@ -1,5 +1,6 @@
 ﻿using PriceGrabber.Core;
 using PriceGrabber.Pages;
+using PriceGrabber.Helpers;
 using PriceGrabber.Pages.PriceGrabber;
 using PriceGrabber.Views;
 using System;
@@ -20,6 +21,7 @@ namespace PriceGrabber
         {
             InitializeComponent();
             Instance = this;
+            FontHelper.SetFonts(true);
             MainPage = new LoginPage();
             //MainPage = new MainPage();
             //MainPage = new AddProductPhotoPage(null, new Core.Data.PriceGrabberItem());

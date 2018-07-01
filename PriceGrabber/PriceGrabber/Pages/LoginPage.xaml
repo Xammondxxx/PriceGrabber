@@ -11,7 +11,7 @@
                     <RowDefinition Height="20*"/>
                 </Grid.RowDefinitions>
                 <Button Grid.Row="0"
-                    x:Name="btnLogin"
+                    x:Name="BtnLogin"
                     Text="LOG IN" TextColor="White" BackgroundColor="{StaticResource MainBackgroundColor}" 
                     HeightRequest="50" 
                     HorizontalOptions="CenterAndExpand"
@@ -24,7 +24,7 @@
                        />
             
                 <ActivityIndicator Grid.Row="0" Grid.RowSpan="3"
-                    x:Name="activityIndicator" IsVisible="False" HeightRequest="60" 
+                    x:Name="Indicator" IsVisible="False" HeightRequest="60" 
                     HorizontalOptions="CenterAndExpand"
                     VerticalOptions="CenterAndExpand"
                     Scale ="2.0"/>
